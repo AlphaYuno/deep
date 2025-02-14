@@ -1,0 +1,180 @@
+/* Set up a flex container on body so that footer stays at bottom */
+html, body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Background and overall styles */
+body {
+  background: url("https://challenger.org/wp-content/uploads/2023/08/Deepfake-Science.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: #333;
+}
+
+/* Main content takes available space */
+.main-content {
+  flex: 1;
+  margin-top: 80px; /* space for the fixed header */
+  padding: 20px;
+  text-align: center;
+}
+
+/* Header styles: centered header with Signup/Login buttons in the center */
+.site-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+.header-center {
+  display: flex;
+  gap: 30px;
+}
+.header-button {
+  text-decoration: none;
+  color: #4285F4;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+/* About Section: simple text on left, no box */
+.about-section {
+  text-align: left;
+  padding: 40px 10%;
+  margin: 20px auto;
+  font-size: 1.2em;
+  line-height: 1.6;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+  background: transparent;
+}
+
+/* Footer styles */
+.site-footer {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid #ddd;
+}
+
+/* Signup and Login Containers */
+.signup-container, .login-container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  max-width: 800px;
+  margin: 100px auto 50px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.dashboard-container header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dashboard-container nav a {
+  text-decoration: none;
+  color: #4285F4;
+  font-weight: bold;
+}
+
+/* General Form Styles */
+form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 0 auto;
+}
+label {
+  margin-top: 10px;
+  text-align: left;
+}
+input, textarea {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+button {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #4285F4;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #357AE8;
+}
+
+/* Flash messages */
+.flash-messages {
+  list-style: none;
+  padding: 0;
+}
+.flash-messages li {
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 4px;
+}
+.flash-messages .error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+.flash-messages .success {
+  background-color: #d4edda;
+  color: #155724;
+}
+.flash-messages .info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+/* Upload Section in Dashboard */
+.upload-section {
+  text-align: center;
+  margin-top: 30px;
+}
+.upload-box {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 40px;
+  margin: 0 auto;
+  width: 80%;
+  max-width: 400px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  background: #f9f9f9;
+}
+.upload-box.dragover {
+  border-color: #4285F4;
+}
+.upload-box p {
+  margin: 0;
+  font-size: 16px;
+  color: #666;
+}
+#result {
+  margin-top: 20px;
+  font-size: 18px;
+}

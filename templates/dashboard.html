@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Deepfake Detector - Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="dashboard-container full-page">
+    <header>
+      <h1>Dashboard</h1>
+      <nav>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </nav>
+    </header>
+    <section class="upload-section">
+      <h2>Upload an Image</h2>
+      <div class="upload-box" id="upload-box">
+        <input type="file" id="image-input" name="image" accept="image/*" hidden>
+        <p id="upload-text">Drag & Drop an image here or click to upload</p>
+      </div>
+      <button id="predict-btn">Predict</button>
+      <div id="result"></div>
+    </section>
+  </div>
+  
+  <script>
+    const uploadBox = document.getElementById('upload-box');
+    const imageInput = document.getElementById('image-input');
+    const predictBtn = document.getElementById('predict-btn');
+    const resultDiv = document.getElementById('result');
+
+    uploadBox.addEventListener('click', () => {
+      imageInput.click();
+    });
+
+    uploadBox.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadBox.classList.add('dragover');
+    });
+    uploadBox.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      uploadBox.classList.remove('dragover');
+    });
+    uploadBox.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadBox.classList.remove('dragover');
+      const files = e.dataTransfer.files;
+      if (files.length) {
+        imageInput.files = files;
+        document.getElementById('upload-text').textContent = files[0].name;
+      }
+    });
+
+    imageInput.addEventListener('change', () => {
+      if (imageInput.files.length) {
+        document.getElementById('upload-text').textContent = imageInput.files[0].name;
+      }
+    });
+
+    predictBtn.addEventListener('click', () => {
+      if (imageInput.files.length === 0) {
+        alert('Please select an image.');
+        return;
+      }
+      var formData = new FormData();
+      formData.append('image', imageInput.files[0]);
+
+      fetch('/predict', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          resultDiv.innerHTML = '<p>Error: ' + data.error + '</p>';
+        } else {
+          resultDiv.innerHTML = '<p><strong>Predicted Label:</strong> ' + data.label + '</p>' +
+                                '<p><strong>Real Percentage:</strong> ' + data.real_percentage.toFixed(2) + '%</p>' +
+                                '<p><strong>Fake Percentage:</strong> ' + data.fake_percentage.toFixed(2) + '%</p>';
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    });
+  </script>
+</body>
+</html>
