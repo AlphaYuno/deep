@@ -13,7 +13,7 @@ DATABASE_PATH = "predictions.db"
 
 def get_db_connection():
     conn = sqlite3.connect(DATABASE_PATH, check_same_thread=False)
-    conn.row_factory = sqlite3.Row  # if you need to fetch rows as dictionaries
+    conn.row_factory = sqlite3.Row  # Optional: fetch rows as dictionaries if needed
     return conn
 
 def create_table():
@@ -35,7 +35,7 @@ def create_table():
 create_table()
 
 # --- Model Download & Loading Section ---
-# Replace MODEL_URL with your actual URL for the model file if needed.
+# Replace MODEL_URL with your actual model URL if needed.
 MODEL_URL = 'https://example.com/path/to/fake_image_classifier.h5'
 MODEL_LOCAL_PATH = 'fake_image_classifier.h5'
 
@@ -57,7 +57,8 @@ def download_model():
 
 download_model()
 
-@st.cache(allow_output_mutation=True)
+# Use st.cache_resource for caching the model resource
+@st.cache_resource
 def load_detection_model():
     st.info("Loading model...")
     model = load_model(MODEL_LOCAL_PATH)
@@ -75,7 +76,7 @@ def preprocess_image(pil_image, target_size=224):
         image = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
     elif image.shape[2] == 4:  # If image has alpha channel
         image = cv2.cvtColor(image, cv2.COLOR_RGBA2RGB)
-    # Convert from RGB (PIL) to BGR (OpenCV) if needed (model may expect one or the other)
+    # Convert from RGB (PIL) to BGR (OpenCV) if needed
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     # Resize the image
     image = cv2.resize(image, (target_size, target_size))
@@ -93,9 +94,9 @@ st.write("Upload an image to check if it is a deepfake. The result and image inf
 uploaded_file = st.file_uploader("Choose an image (JPG, JPEG, PNG)", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
-    # Display the uploaded image
+    # Display the uploaded image using the new `use_container_width` parameter
     image = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded Image", use_column_width=True)
+    st.image(image, caption="Uploaded Image", use_container_width=True)
     
     if st.button("Predict"):
         try:
