@@ -8,7 +8,7 @@ import datetime
 import sqlite3
 import gdown
 
-folder_id = "1gxwtPi8rupeMSOU6UGg9GnV_c76Xq8kv"
+folder_id = "1OHRa561tiIN9i5kxJVz4mFY_g--Sk1dH"
 SAVE_PATH = "fake_image_classifier.h5"
 # ✅ Download the folder if it doesn't exist
 if not os.path.exists(SAVE_PATH):
