@@ -6,6 +6,13 @@ from PIL import Image
 from keras.models import load_model
 import datetime
 import sqlite3
+import gdown
+
+folder_id = "1gxwtPi8rupeMSOU6UGg9GnV_c76Xq8kv"
+SAVE_PATH = "fake_image_classifier.h5"
+# ✅ Download the folder if it doesn't exist
+if not os.path.exists(SAVE_PATH):
+    gdown.download_folder(id = folder_id, output=SAVE_PATH, quiet=False)
 
 # --- SQLite Database Setup ---
 DATABASE_PATH = "predictions.db"
@@ -36,7 +43,7 @@ create_table()
 # --- Model Loading Section ---
 # This code assumes that the file 'fake_image_classifier.h5' is present in the repository root.
 # IMPORTANT: Ensure that this file is not tracked by Git LFS (or that Git LFS is correctly configured in your deployment environment)
-MODEL_LOCAL_PATH = 'fake_image_classifier.h5'
+MODEL_LOCAL_PATH = SAVE_PATH
 
 if not os.path.exists(MODEL_LOCAL_PATH):
     st.error("Model file not found. Please ensure 'fake_image_classifier.h5' is in the repository.")
